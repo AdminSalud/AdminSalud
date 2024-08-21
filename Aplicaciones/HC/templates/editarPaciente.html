@@ -1,0 +1,40 @@
+{% extends "./base.html" %}
+{% block title %} Gestion Pacientes {% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+
+        <h2> Edicion de Pacientes </h2>
+        <div class="card">
+            <div class="card-body">
+               <form action="/edicionPaciente/" method="post">{% csrf_token %}
+                   <div   class="form-group">
+                       <input type="text" id="numcc" name="numcc" value="{{paciente.cc}}" class="form-control"
+                        placeholder="Cedula" minlength="10" maxlength="10" readonly required>
+                   </div>
+                   <br>
+                   <div   class="form-group">
+                       <input type="text" id="txtnombre" name="txtnombre" value="{{paciente.nombre}}"  class="form-control"
+                         maxlength="70" placeholder="Nombre" required>
+                   </div>
+                   <br>
+                   <div   class="form-group">
+                       <input type="text" id="txthistoriaclinica" name="txthistoriaclinica"  value="{{paciente.historiaclinica}}" class="form-control"
+                       placeholder="Historia Clinica" maxlength="50" size="50" required>
+                   </div>
+                   <br>
+                   <div   class="form-group">
+                       <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                   </div>
+
+
+               </form>
+                
+            </div>
+        </div> 
+    </div>
+
+
+</div>
+
+{% endblock %}

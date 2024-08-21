@@ -1,0 +1,21 @@
+{% extends "./base.html" %}
+{% block title %} Gestion Pacientes {% endblock %}
+{% block body %}
+
+
+        <div class="mb-3">
+            <h1><label for="formFile" class="form-label"></label>Subir Archivo Excel</label></h1>
+                <form method="post" action="/pasarjson/" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input   class="form-control" type="file" name="excel_file" required>
+                <br>
+                <div>
+                    <button type="submit" class="btn btn-primary btn-lg"><a class=" btn btn-info">pasar a json</a></button>
+                </div>
+                </form>
+
+        </div>
+
+
+
+{% endblock %}
