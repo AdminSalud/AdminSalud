@@ -1,84 +1,35 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from .models import Paciente
 from  django.contrib import messages 
 import pandas as pd
 import json
-
+from django.contrib.auth import logout
 
 
 # Create your views here.
-def register_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        user = User.objects.create_user(username, email, password)
-        # Puedes personalizar esta redirección según tus necesidades
-        return redirect('/')
-    else:
-        return render(request, 'register.html')
 
-def register_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        user = User.objects.create_user(username, email, password)
-        # Puedes personalizar esta redirección según tus necesidades
-        return redirect('/')
-    else:
-        return render(request, 'register.html')
 
-def login_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            # Redirigir a la página de inicio o a otra página deseada
-            return redirect('/')
-        else:
-            # Mostrar un mensaje de error de inicio de sesión
-            return render(request, 'login.html', {'error_message': 'Invalid username or password'})
-    else:
-        return render(request, 'login.html')
-
-def logout_view(request):
-    logout(request)
-    # Redirigir a la página de inicio o a otra página deseada
-    return redirect('/')
-
+@login_required
 def home(request):
-    pacienteslistados = Paciente.objects.all()
+    pacienteslistados = Paciente.objects.filter(id_user = request.user.id)
     messages.success(request,'Pacientes listados')
     return render(request,"gestionpacientes.html",{"pacientes":pacienteslistados})
-    """
-   # if request.method == 'POST':
-     #   username = request.POST['username']
-      #  password = request.POST['password']
-       # user = authenticate(request, username=username, password=password)
-       # if user is not None:
-            login(request, user)
-                # Redirigir a la página de inicio o a otra página deseada
-            return redirect('/')
-        else:
-                # Mostrar un mensaje de error de inicio de sesión
-            return render(request, 'login.html', {'error_message': 'Invalid username or password'})
-    else:
-        return render(request, 'login.html')
-    """
 
 
-
+def exit(request):
+    logout(request)
+    return render(request,"registration/logout.html")
+  
 def registrapaciente(request):
+    id_usuario = request.user.id
     cc = request.POST['numcc']
     nombre = request.POST['txtnombre']
     historiaclinica = request.POST['txthistoriaclinica']
 
-    Paciente.objects.create(cc = cc, nombre = nombre, historiaclinica = historiaclinica)
+    Paciente.objects.create(id_user = id_usuario ,cc = cc, nombre = nombre, historiaclinica = historiaclinica)
     messages.success(request, '¡Pacientes registrado!')
     return redirect('/')
 
