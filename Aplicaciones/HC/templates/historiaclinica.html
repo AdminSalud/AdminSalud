@@ -1,0 +1,212 @@
+{% extends "./base.html" %}
+{% block title %} Gestion Pacientes {% endblock %}
+{% block body %}
+<br>
+<br>
+<div class="row">
+    <div class="col">
+        <div class="container">
+           <h2> HISTORIA CLINICA </h2>
+    
+           <form action="/registrapaciente/" method="post"  enctype="multipart/form-data">
+            <div class="col-md-6">
+                    * Campos obligatorios
+                    <br>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="tipo_documento">Tipo de Documento * </label>
+                        <select id="tipo_documento" name="tipo_documento" class="form-control" required>
+                            <option value="">Seleccione un tipo de documento</option>
+                            <option value="CC">Cédula de Ciudadanía</option>
+                            <option value="TI">Tarjeta de Identidad</option>
+                            <option value="CE">Cédula de Extranjería</option>
+                            <option value="PA">Pasaporte</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="numcc">Cédula *</label>
+                        <input type="text" id="numcc" name="numcc" class="form-control" maxlength="10" required pattern="\d{1,10}" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="txtnombre">Nombre *</label>
+                        <input type="text" id="txtnombre" name="txtnombre" class="form-control" maxlength="100"  required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="txtapellidos">Apellidos *</label>
+                        <input type="text" id="txtapellidos" name="txtapellidos" class="form-control" maxlength="100" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="genero">Género *</label>
+                        <select id="genero" name="genero" class="form-control" required>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+            </div>
+            <br>
+            <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="eps">EPS </label>
+                        <input type="text" id="eps" name="eps" class="form-control" maxlength="100" >
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="estado_civil">Estado Civil</label>
+                        <input type="text" id="estado_civil" name="estado_civil" class="form-control" maxlength="50" >
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="ocupacion">Ocupación</label>
+                        <input type="text" id="ocupacion" name="ocupacion" class="form-control" maxlength="100" >
+                    </div>
+                    <br>
+                
+                    <div class="form-group">
+                        <label for="direccion_domicilio">Dirección Domicilio *</label>
+                        <input type="text" id="direccion_domicilio" name="direccion_domicilio" class="form-control" maxlength="200" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="ciudad_residencia">Ciudad de Residencia *</label>
+                        <select id="ciudad_residencia" name="ciudad_residencia" class="form-control" required>
+                            <option value="">Seleccione una ciudad</option>
+                            <option value="Bogotá">Bogotá</option>
+                            <option value="Medellín">Medellín</option>
+                            <option value="Cali">Cali</option>
+                            <option value="Barranquilla">Barranquilla</option>
+                            <option value="Cartagena">Cartagena</option>
+                            <option value="Cúcuta">Cúcuta</option>
+                            <option value="Bucaramanga">Bucaramanga</option>
+                            <option value="Pereira">Pereira</option>
+                            <option value="Santa Marta">Santa Marta</option>
+                            <option value="Ibagué">Ibagué</option>
+                            <!-- Añade más ciudades según sea necesario -->
+                        </select>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="tel_contacto">Teléfono de Contacto *</label>
+                        <input type="text" id="tel_contacto" name="tel_contacto" class="form-control" maxlength="10" required pattern="\d{10}" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="fecha_nacimiento">Fecha de Nacimiento *</label>
+                        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" required>
+                    </div>
+            <br>
+           </div>
+            <div class="form-group">
+                <label for="nombre_acompanante">Nombre del Acompañante</label>
+                <input type="text" id="nombre_acompanante" name="nombre_acompanante" class="form-control" maxlength="150" >
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="parentesco">Parentesco</label>
+                <input type="text" id="parentesco" name="parentesco" class="form-control" maxlength="50">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="tel_contacto_acompanante">Teléfono de Contacto del Acompañante</label>
+                <input type="text" id="tel_contacto_acompanante" name="tel_contacto_acompanante" class="form-control" maxlength="10"  pattern="\d{10}" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
+              
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="motivo_consulta">Motivo de Consulta *</label>
+                <textarea id="motivo_consulta" name="motivo_consulta" class="form-control" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="AntecedentesMedicos">Antecedentes Médicos</label>
+                <textarea id="AntecedentesMedicos" name="AntecedentesMedicos" class="form-control" rows="4" ></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="CondicionesMedicasAct">Condiciones Médicas Actuales</label>
+                <textarea id="CondicionesMedicasAct" name="CondicionesMedicasAct" class="form-control" rows="4" ></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="His_problemasPsicologicos">Historial de Problemas Psicológicos</label>
+                <textarea id="His_problemasPsicologicos" name="His_problemasPsicologicos" class="form-control" rows="4" ></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="His_tratamientoAnteriones">Historial de Tratamientos Anteriores</label>
+                <textarea id="His_tratamientoAnteriones" name="His_tratamientoAnteriones" class="form-control" rows="4" ></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="composicionFamiliar">Composición Familiar</label>
+                <textarea id="composicionFamiliar" name="composicionFamiliar" class="form-control" rows="4" ></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="antecedentesdeEnfermedadesMentales">Antecedentes de Enfermedades Mentales</label>
+                <textarea id="antecedentesdeEnfermedadesMentales" name="antecedentesdeEnfermedadesMentales" class="form-control" rows="4"></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="Examenes_clinicos">Apoyo Diagnóstico</label>
+                <input type="file" id="Examenes_clinicos" name="Examenes_clinicos" class="form-control">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="RelacionesInterpersonales">Relaciones Interpersonales</label>
+                <textarea id="RelacionesInterpersonales" name="RelacionesInterpersonales" class="form-control" rows="4" ></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="ApoyoSocial">Apoyo Social</label>
+                <textarea id="ApoyoSocial" name="ApoyoSocial" class="form-control" rows="4"></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="SintomasActuales">Síntomas Actuales</label>
+                <textarea id="SintomasActuales" name="SintomasActuales" class="form-control" rows="4" ></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="objetivosdelaTerapia">Objetivos de la Terapia</label>
+                <textarea id="objetivosdelaTerapia" name="objetivosdelaTerapia" class="form-control" rows="4"></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="HistoriadeVida">Historia de Vida</label>
+                    <textarea id="HistoriadeVida" name="HistoriadeVida" class="form-control" rows="4" ></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="evalucionDiagnosticaPreliminar">Evaluación Diagnóstica Preliminar</label>
+                <textarea id="evalucionDiagnosticaPreliminar" name="evalucionDiagnosticaPreliminar" class="form-control" rows="4" ></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="enfoqueterapeutico">Enfoque Terapéutico</label>
+                <textarea id="enfoqueterapeutico" name="enfoqueterapeutico" class="form-control" rows="4"></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="FrecuenciadeSecciones">Frecuencia de Secciones</label>
+                <textarea id="FrecuenciadeSecciones" name="FrecuenciadeSecciones" class="form-control" rows="4" ></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="IntervencionesyEstrategias">Intervenciones y Estrategias</label>
+                <textarea id="IntervencionesyEstrategias" name="IntervencionesyEstrategias" class="form-control" rows="4" ></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+            </div>
+        </form>
+        
+        </div>
+    </div>
+</div>
+
+{% endblock %}

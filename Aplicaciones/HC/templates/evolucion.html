@@ -1,0 +1,82 @@
+{% extends "./base.html" %}
+{% block title %} Gestion Pacientes {% endblock %}
+{% block body %}
+<br>
+<br>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title text-center border-bottom pb-2">{{ paciente.cc }} - {{ paciente.nombre }} {{ paciente.apellidos }}</h4>
+            <p class="card-text"><strong>EPS:</strong> {{ paciente.eps }}</p>
+            <p class="card-text"><strong>Estado Civil:</strong> {{ paciente.estado_civil }}</p>
+            <p class="card-text"><strong>Ocupación:</strong> {{ paciente.ocupacion }}</p>
+            <p class="card-text"><strong>Dirección:</strong> {{ paciente.direccion_domicilio }}</p>
+            <p class="card-text"><strong>Ciudad de Residencia:</strong> {{ paciente.ciudad_residencia }}</p>
+            <p class="card-text"><strong>Teléfono de Contacto:</strong> {{ paciente.tel_contacto }}</p>
+            <p class="card-text"><strong>Nombre del Acompañante:</strong> {{ paciente.nombre_acompanante }}</p>
+            <p class="card-text"><strong>Parentesco:</strong> {{ paciente.parentesco }}</p>
+            <p class="card-text"><strong>Teléfono del Acompañante:</strong> {{ paciente.tel_contacto_acompanante }}</p>
+            <p class="card-text"><strong>Antecedentes Médicos:</strong> {{ paciente.AntecedentesMedicos }}</p>
+            <p class="card-text"><strong>Condiciones Médicas Actuales:</strong> {{ paciente.CondicionesMedicasAct }}</p>
+            <p class="card-text"><strong>Historial de Problemas Psicológicos:</strong> {{ paciente.his_problemasPsicologicos }}</p>
+            <p class="card-text"><strong>Historial de Tratamientos Anteriores:</strong> {{ paciente.His_tratamientoAnteriones }}</p>
+            <p class="card-text"><strong>Composición Familiar:</strong> {{ paciente.composicionFamiliar }}</p>
+            <p class="card-text"><strong>Antecedentes de Enfermedades Mentales:</strong> {{ paciente.antecedentesdeEnfermedadesMentales }}</p>
+            <p class="card-text"><strong>Relaciones Interpersonales:</strong> {{ paciente.RelacionesInterpersonales }}</p>
+            <p class="card-text"><strong>Apoyo Social:</strong> {{ paciente.ApoyoSocial }}</p>
+            <p class="card-text"><strong>Síntomas Actuales:</strong> {{ paciente.SintomasActuales }}</p>
+            <p class="card-text"><strong>Objetivos de la Terapia:</strong> {{ paciente.objetivosdelaTerapia }}</p>
+            <p class="card-text"><strong>Historia de Vida:</strong> {{ paciente.HistoriadeVida }}</p>
+            <p class="card-text"><strong>Evaluación Diagnóstica Preliminar:</strong> {{ paciente.evalucionDiagnosticaPreliminar }}</p>
+            <p class="card-text"><strong>Enfoque Terapéutico:</strong> {{ paciente.enfoqueterapeutico }}</p>
+            <p class="card-text"><strong>Frecuencia de Sesiones:</strong> {{ paciente.FrecuenciadeSecciones }}</p>
+            <p class="card-text"><strong>Intervenciones y Estrategias:</strong> {{ paciente.IntervencionesyEstrategias }}</p>
+        </div>
+    </div>
+</div>
+<br>
+    <div class="col">
+        <h1>Listado de Evoluciones</h1>
+        {% if evoluciones %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Fecha de Creacion </th>
+                        <th>Evolución </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for evolucion in evoluciones %}
+                    <tr>
+                        <td>{{ evolucion.fecha  }}</td>
+                        <td>{{ evolucion.evolucion }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p>No tiene evoluiones.</p>
+        {% endif %}
+    </div>
+<br>
+
+    <div class="col">
+        
+        <h2>Crear Evolución</h2>
+        <form method="POST" action="{% url 'grabarevolucion' paciente.cc %}">
+            {% csrf_token %}
+            <input type="hidden" name="cc" value="{{ paciente.cc }}">
+            <div class="form-group">
+                <textarea id="CrearEvolucion" name="CrearEvolucion" class="form-control" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+ 
+        
+     </div>
+
+
+
+{% endblock %}

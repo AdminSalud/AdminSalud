@@ -1,38 +1,222 @@
 {% extends "./base.html" %}
 {% block title %} Gestion Pacientes {% endblock %}
 {% block body %}
-<div class="row">
-    <div class="col-md-4 offset-md-4">
+<div class="container">
+    <div class="col">
 
-        <h2> Edicion de Pacientes </h2>
+        <h2> Edicion de Pacientes Historia Clinica </h2>
         <div class="card">
             <div class="card-body">
-               <form action="/edicionPaciente/" method="post">{% csrf_token %}
+               <form action="/edicionPaciente/" method="post">
+                {% csrf_token %}
+
+                 <div   class="form-group">
+                    <label for="tipo_documento">Tipo de Documento</label>
+                    <input type="text" id="tipo_documento" name="tipo_documento" value="{{paciente.TipoDocumento}}" class="form-control"
+                     placeholder="Cedula" minlength="10" maxlength="10" readonly>
+                </div>
                    <div   class="form-group">
+                    <label for="numcc">Cedula</label>
                        <input type="text" id="numcc" name="numcc" value="{{paciente.cc}}" class="form-control"
-                        placeholder="Cedula" minlength="10" maxlength="10" readonly required>
+                        placeholder="Cedula" minlength="10" maxlength="10" readonly>
                    </div>
                    <br>
-                   <div   class="form-group">
+                   <div  class="form-group">
+                       <label for="txtnombre">Nombre</label>
                        <input type="text" id="txtnombre" name="txtnombre" value="{{paciente.nombre}}"  class="form-control"
-                         maxlength="70" placeholder="Nombre" required>
+                         maxlength="70" placeholder="Nombre" readonly>
+                   </div>
+                   <div   class="form-group">
+                    <label for="txtapellidos">Apellidos</label>
+                    <input type="text" id="txtapellidos" name="txtapellidos" value="{{paciente.apellidos}}"  class="form-control"
+                      maxlength="70" placeholder="Apellido" readonly>
                    </div>
                    <br>
                    <div   class="form-group">
-                       <input type="text" id="txthistoriaclinica" name="txthistoriaclinica"  value="{{paciente.historiaclinica}}" class="form-control"
-                       placeholder="Historia Clinica" maxlength="50" size="50" required>
+                    <label for="genero">Genero</label>
+                    <input type="text" id="genero" name="genero" value="{{paciente.genero}}"  class="form-control"
+                      maxlength="70" placeholder="Genero" readonly>
                    </div>
                    <br>
                    <div   class="form-group">
-                       <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    <label for="eps">EPS</label>
+                    <input type="text" id="eps" name="eps" value="{{paciente.eps}}"  class="form-control"
+                      maxlength="70" placeholder="EPS" >
                    </div>
+           
+                    <br>
+                    <div class="form-group">
+                        <label for="estado_civil">Estado Civil</label>
+                        <input type="text" id="estado_civil" name="estado_civil" value="{{paciente.estado_civil}}" class="form-control" maxlength="50" placeholder="Estado Civil">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="ocupacion">Ocupación</label>
+                        <input type="text" id="ocupacion" name="ocupacion"  value="{{paciente.ocupacion}}"  class="form-control" maxlength="100" placeholder="Ocupación">
+                    </div>
+                    <br>
+                   
+                    <div class="form-group">
+                        <label for="direccion_domicilio">Dirección Domicilio *</label>
+                        <input type="text" id="direccion_domicilio" name="direccion_domicilio"   value="{{paciente.direccion_domicilio}}"  class="form-control" maxlength="200" placeholder="Dirección Domicilio" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="ciudad_residencia">Ciudad de Residencia *</label>
+                        <select id="ciudad_residencia" name="ciudad_residencia" class="form-control" required>
+                            <option value="">Seleccione una ciudad</option>
+                            <option value="Bogotá" {% if paciente.ciudad_residencia == "Bogotá" %}selected{% endif %}>Bogotá</option>
+                            <option value="Medellín" {% if paciente.ciudad_residencia == "Medellín" %}selected{% endif %}>Medellín</option>
+                            <option value="Cali" {% if paciente.ciudad_residencia == "Cali" %}selected{% endif %}>Cali</option>
+                            <option value="Barranquilla" {% if paciente.ciudad_residencia == "Barranquilla" %}selected{% endif %}>Barranquilla</option>
+                            <option value="Cartagena" {% if paciente.ciudad_residencia == "Cartagena" %}selected{% endif %}>Cartagena</option>
+                            <option value="Cúcuta" {% if paciente.ciudad_residencia == "Cúcuta" %}selected{% endif %}>Cúcuta</option>
+                            <option value="Bucaramanga" {% if paciente.ciudad_residencia == "Bucaramanga" %}selected{% endif %}>Bucaramanga</option>
+                            <option value="Pereira" {% if paciente.ciudad_residencia == "Pereira" %}selected{% endif %}>Pereira</option>
+                            <option value="Santa Marta" {% if paciente.ciudad_residencia == "Santa Marta" %}selected{% endif %}>Santa Marta</option>
+                            <option value="Ibagué" {% if paciente.ciudad_residencia == "Ibagué" %}selected{% endif %}>Ibagué</option>
+                            <!-- Añade más ciudades según sea necesario -->
+                        </select>
+                    </div>
+                    <br>
+                   
+                    <br>
+                    <div class="form-group">
+                        <label for="tel_contacto">Teléfono de Contacto  </label>
+                        <input type="text" id="tel_contacto" name="tel_contacto" value="{{paciente.tel_contacto}}" class="form-control" maxlength="20" placeholder="Teléfono de Contacto" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="fecha_nacimiento">Fecha de Nacimiento *</label>
+                        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento"  value="{{paciente.fechaNacimiento|date:'Y-m-d'}}" class="form-control" readonly>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="nombre_acompanante">Nombre del Acompañante</label>
+                        <input type="text" id="nombre_acompanante" name="nombre_acompanante" value="{{paciente.nombreAcompanante}}"  class="form-control" maxlength="150" placeholder="Nombre del Acompañante">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="parentesco">Parentesco</label>
+                        <input type="text" id="parentesco" name="parentesco" value="{{paciente.parentesco}}"   class="form-control" maxlength="50">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="tel_contacto_acompanante">Teléfono de Contacto del Acompañante</label>
+                        <input type="text" id="tel_contacto_acompanante" name="tel_contacto_acompanante"  value="{{paciente.tel_contacto_acompanante}}" class="form-control" maxlength="10"  pattern="\d{10}" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
+                      
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="motivoConsulta">Motivo de Consulta *</label>
+                        <textarea id="motivoConsulta" name="motivoConsulta" class="form-control" rows="4" required readonly>{{ paciente.motivoConsulta }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="AntecedentesMedicos">Antecedentes Médicos</label>
+                        <textarea id="AntecedentesMedicos" name="AntecedentesMedicos" class="form-control" rows="4" >{{paciente.AntecedentesMedicos}}</textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="CondicionesMedicasAct">Condiciones Médicas Actuales</label>
+                        <textarea id="CondicionesMedicasAct" name="CondicionesMedicasAct" class="form-control" rows="4" >{{paciente.CondicionesMedicasAct}}</textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="His_problemasPsicologicos">Historial de Problemas Psicológicos</label>
+                        <textarea id="His_problemasPsicologicos" name="His_problemasPsicologicos"  class="form-control" rows="4" >{{paciente.His_problemasPsicologicos}}</textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="His_tratamientoAnteriones">Historial de Tratamientos Anteriores</label>
+                        <textarea id="His_tratamientoAnteriones" name="His_tratamientoAnteriones"   class="form-control" rows="4" >{{paciente.His_tratamientoAnteriones}}</textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="composicionFamiliar">Composición Familiar</label>
+                        <textarea id="composicionFamiliar" name="composicionFamiliar"   class="form-control" rows="4" >{{paciente.composicionFamiliar}}</textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="antecedentesdeEnfermedadesMentales">Antecedentes de Enfermedades Mentales</label>
+                        <textarea id="antecedentesdeEnfermedadesMentales" name="antecedentesdeEnfermedadesMentales"   class="form-control" rows="4">{{paciente.antecedentesdeEnfermedadesMentales}}</textarea>
+                    </div>
+                    <br>
 
+                    <div class="form-group">
+                        <label for="Examenes_clinicos">Apoyo Diagnostico</label>
+                        {% if Examenes_clinicos %}
+                            <a href="{{ Examenes_clinicos }}" target="_blank">
+                                <img src="{{ Examenes_clinicos }}" alt="Examenes_clinicos" class="img-thumbnail" style="max-width: 200px;">
+                            </a>
+                        {% else %}
+                            <p>No hay imagen disponible</p>
+                        {% endif %}
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="RelacionesInterpersonales">Relaciones Interpersonales</label>
+                        <textarea id="RelacionesInterpersonales" name="RelacionesInterpersonales"  class="form-control" rows="4" >{{paciente.RelacionesInterpersonales}}</textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="ApoyoSocial">Apoyo Social</label>
+                        <textarea id="ApoyoSocial" name="ApoyoSocial"  class="form-control" rows="4">{{paciente.ApoyoSocial}}</textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="SintomasActuales">Síntomas Actuales</label>
+                        <textarea id="SintomasActuales" name="SintomasActuales"   class="form-control" rows="4" > {{paciente.SintomasActuales}}</textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="objetivosdelaTerapia">Objetivos de la Terapia</label>
+                        <textarea id="objetivosdelaTerapia" name="objetivosdelaTerapia"  class="form-control" rows="4">{{paciente.objetivosdelaTerapia}}</textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="HistoriadeVida">Historia de Vida</label>
+                            <textarea id="HistoriadeVida" name="HistoriadeVida"   class="form-control" rows="4" >{{paciente.HistoriadeVida}}</textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="evalucionDiagnosticaPreliminar">Evaluación Diagnóstica Preliminar</label>
+                        <textarea id="evalucionDiagnosticaPreliminar" name="evalucionDiagnosticaPreliminar" class="form-control" rows="4">{{ paciente.evalucionDiagnosticaPreliminar }}</textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="enfoqueterapeutico">Enfoque Terapéutico</label>
+                        <textarea id="enfoqueterapeutico" name="enfoqueterapeutico"  class="form-control" rows="4">{{paciente.enfoqueterapeutico}}</textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="FrecuenciadeSecciones">Frecuencia de Secciones</label>
+                        <textarea id="FrecuenciadeSecciones" name="FrecuenciadeSecciones" class="form-control" rows="4" >{{paciente.FrecuenciadeSecciones}}</textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="IntervencionesyEstrategias">Intervenciones y Estrategias</label>
+                        <textarea id="IntervencionesyEstrategias" name="IntervencionesyEstrategias"  class="form-control" rows="4" >{{paciente.IntervencionesyEstrategias}}</textarea>
+                    </div>
+                    <br>
+                    
+                    <div   class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
 
-               </form>
-                
             </div>
         </div> 
     </div>
+    <script>
+        // disable no funciona
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function() {
+                const motivoConsulta = document.getElementById('motivoConsulta');
+                motivoConsulta.disabled = false;
+            });
+        });
+    </script>
 
 
 </div>

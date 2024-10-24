@@ -7,44 +7,96 @@
     <title>{% block title %} {% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/gestionpacientes.css' %}">
+    <style>
+      /* Estilos personalizados */
+      .form-container {
+          background-color: #f9f9f9; /* Fondo suave */
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+          max-width: 700px; /* Ancho máximo para pantallas grandes */
+          margin: auto; /* Centrar el formulario */
+      }
+
+      .form-container h2 {
+          font-weight: bold;
+          color: #343a40; /* Color oscuro para el título */
+          text-align: center;
+          margin-bottom: 20px;
+      }
+      input[readonly] {
+            background-color: #e9ecef;  /* Color de fondo gris claro */
+            cursor: not-allowed;        /* Cursor de "no permitido" */
+        }
+
+      /* Ajustar el formulario en pantallas más grandes */
+      @media (min-width: 768px) {
+          .form-control {
+              max-width: 500px; /* Limitar el ancho de los inputs */
+          }
+      }
+  </style>
+
 </head>
 
 <body>
-   <h4>
-    {{ user.username | upper }} bienvenido
-    </h4>
-    <nav class="navbar navbar-expand-lg bg-ingo">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">AdminSalud</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="Validador.html">Validador</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Contacto</a>
-              </li>
-             {% if request.user.is_authenticated %}
-                 <li><a href={% url 'exit' %}>Salir</a></li>
-             {% else %}
-                 <li><a href={% url 'login' %}>Ingresar</a></li>
-             {% endif %}
-            </ul>
-          </div>
-        </div>
-      </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col">    
+        <h4>
+          <br>
+          {{ user.username | upper }} bienvenido
+          </h4>
+            <nav class="navbar navbar-expand-lg bg-ingo navbar-light" style="background-color: #e3f2fd;">
+              <div class="container-fluid">
+                <a class="navbar-brand" href="#">AdminSalud</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="{% url 'editarPerfil' %}">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="Validador.html">Validador</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Contacto</a>
+                    </li>
+                  {% if request.user.is_authenticated %}
+                      <li><a href={% url 'exit' %}>Salir</a></li>
+                  {% else %}
+                      <li><a href={% url 'login' %}>Ingresar</a></li>
+                  {% endif %}
+                  </ul>
+                </div>
+              </div>
+            </nav>
+         </div>
+
+         
+         
+
+
+
+      </div>
+    </div>
+  </div>
+
+  </div>
     <div class="container">
     {% block body %}
 
     {% endblock %}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
 

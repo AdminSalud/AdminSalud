@@ -4,83 +4,57 @@
 <br>
 <br>
 <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-dismissible alert-success">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong class="text-dark">{{ message }}</strong>
-            </div>
-            {% endfor %}
-            {% endif %}
-           <h2> Gestion de Pacientes </h2>
-             <div class="card">
-                 <div class="card-body">
-                    <form action="/registrapaciente/" method="post">{% csrf_token %}
-                        <div   class="form-group">
-                            <input type="text" id="numcc" name="numcc" class="form-control"
-                             placeholder="Cedula" minlength="10" maxlength="10" required>
-                        </div>
-                        <br>
-                        <div   class="form-group">
-                            <input type="text" id="txtnombre" name="txtnombre" class="form-control"
-                              maxlength="70" placeholder="Nombre" >
-                        </div>
-                        <br>
-                        <div   class="form-group">
-                            <input type="text" id="txthistoriaclinica" name="txthistoriaclinica" class="form-control"
-                            placeholder="Historia Clinica" maxlength="50" size="50" required>
-                        </div>
-                 
-                        <br>
-                        <div   class="form-group">
-                            <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
-                        </div>
-
-
-                    </form>
-                     
-                 </div>
-             </div> 
+    <div class="col">
+        <div class="border border-1" style="width: 100%; padding: 20px; text-align: left;">
+            <h2>Gestion de Pacientes</h2>
+            <p>Este es un ejemplo de texto dentro del cuerpo de la tarjeta. Puedes agregar cualquier contenido aquí.</p>
+            <a href="{% url 'historiaclinica' %}"  class="btn btn-primary" style="text-align: right;">Nueva Historia Clinica</a>
+        
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-             <h1>Listado de Pacientes</h1>
-
-            <div class="table-responsive">
-
-                <table class="table table-striped">
-
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Cedula</th>
-                            <th>Nombre</th>
-                            <th>Historia clinica</th>
-                            <th colspan="2">Opciones</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for c in pacientes%}
-                        <tr>
-                            <td>{{forloop.counter}}</td>
-                            <td>{{c.cc}}</td>
-                            <td>{{c.nombre}}</td>
-                            <td>{{c.historiaclinica}}</td>
-                            <td><a href="editarPaciente/{{c.cc}}" class=" btn btn-info">Editar</a></td>
-                            <td><a href="eliminarPaciente/{{c.cc}}" class=" btn btn-danger  btnEliminacion">Eliminar</a></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-            </div>
-            
-        </div>
-
-   
+    </div>
 </div>
+<br>
+<form method="GET" action="{% url 'gestion_pacientes' %}" class="form-inline mb-3">
+    <div class="form-group mr-2">
+        <input type="text" name="q" class="form-control" placeholder="Buscar paciente" value="{{ request.GET.q }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
 
-  </form>
+<div class="col">
+    <h1>Listado de Pacientes</h1>
+    {% if request.GET.q %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#user</th>
+                    <th>#HC</th>
+                    <th>Cedula</th>
+                    <th>Nombre</th>
+                    <th>Fecha de Creacion </th>
+                    <th colspan="2">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in pacientes %}
+                <tr>
+                    <td>{{ c.id_user }}</td>
+                    <td>{{ c.num_historiaclinica }}</td>
+                    <td>{{ c.cc }}</td>
+                    <td>{{ c.nombre }} {{ c.apellidos }}</td>
+                    <td>{{ c.fechaCreacion }}</td>
+                    <td><a href="{% url 'editar_paciente' c.cc %}" class="btn btn-info">Editar</a></td>
+                    <td><a href="{% url 'evoluciones' c.cc %}" class="btn btn-info">Evolución</a></td>
+                    <td><a href="#" class="btn btn-info">Descargar PDF</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+         <p>Utilice el buscador para encontrar pacientes.</p>
+    {% endif %}
+</div>
 
 {% endblock %}

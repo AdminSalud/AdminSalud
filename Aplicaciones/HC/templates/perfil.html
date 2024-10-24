@@ -1,0 +1,133 @@
+{% extends "./base.html" %}
+{% block title %} Gestion Pacientes {% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col">
+        <div class="container">
+           <h2> PERFIL </h2>
+    
+           <form action="/registraperfil/" method="post"  enctype="multipart/form-data">
+            <div class="col-md-6">
+                    * Campos obligatorios
+                    <br>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="TD_profesional">Tipo de Documento * </label>
+                        <select id="TD_profesional" name="TD_profesional" class="form-control" required>
+                            <option value="">Seleccione un tipo de documento</option>
+                            <option value="CC">Cédula de Ciudadanía</option>
+                            <option value="TI">Tarjeta de Identidad</option>
+                            <option value="CE">Cédula de Extranjería</option>
+                            <option value="PA">Pasaporte</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="cc_profesional">Cédula *</label>
+                        <input type="text" id="cc_profesional" name="numcc" class="form-control" maxlength="10" required pattern="\d{1,10}" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="NombreApellidos">Nombre y Apellidos *</label>
+                        <input type="text" id="NombreApellidos" name="NombreApellidos" class="form-control" maxlength="254"  required>
+                    </div>
+                    <br>
+                   
+                    <div class="form-group">
+                        <label for="Foto">Foto</label>
+                        <input type="file" id="Foto" name="Foto" class="form-control" accept="image/*" onchange="previewImage(event)">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="genero">Género *</label>
+                        <select id="genero" name="genero" class="form-control" required>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+            </div>
+            <br>
+            <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" maxlength="254" required>
+                    </div>
+                    <br>              
+                    <div class="form-group">
+                        <label for="direccion">Dirección *</label>
+                        <input type="text" id="direccion" name="direccion" class="form-control" maxlength="200" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="ciudad">Ciudad *</label>
+                        <select id="ciudad" name="ciudad" class="form-control" required>
+                            <option value="">Seleccione una ciudad</option>
+                            <option value="Bogotá">Bogotá</option>
+                            <option value="Medellín">Medellín</option>
+                            <option value="Cali">Cali</option>
+                            <option value="Barranquilla">Barranquilla</option>
+                            <option value="Cartagena">Cartagena</option>
+                            <option value="Cúcuta">Cúcuta</option>
+                            <option value="Bucaramanga">Bucaramanga</option>
+                            <option value="Pereira">Pereira</option>
+                            <option value="Santa Marta">Santa Marta</option>
+                            <option value="Ibagué">Ibagué</option>
+                            <!-- Añade más ciudades según sea necesario -->
+                        </select>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="tel_contacto">Teléfono *</label>
+                        <input type="text" id="tel_contacto" name="tel_contacto" class="form-control" maxlength="10" required pattern="\d{10}" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
+                    </div>
+            <br>
+           </div>
+           <div class="form-group">
+                <label for="especialidad">Especialidad</label>
+                <input type="text" id="especialidad" name="especialidad" class="form-control" maxlength="100" >
+           </div>
+            <div class="form-group">
+                <label for="especialidad">Especialidad</label>
+                <input type="text" id="especialidad" name="especialidad" class="form-control" maxlength="100" >
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="horarioAtencion">Horario Atencion</label>
+                <input type="text" id="horarioAtencion" name="horarioAtencion" class="form-control" maxlength="100">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="codigoPrestador">codigoPrestador</label>
+                <input type="text" id="codigoPrestador" name="codigoPrestador" class="form-control" maxlength="20">
+            </div>
+            <br>
+          
+
+       
+            <br>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+            </div>
+        </form>
+        
+        </div>
+    </div>
+</div>
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('preview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+{% endblock %}
